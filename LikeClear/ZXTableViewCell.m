@@ -45,7 +45,7 @@ const float UI_CUES_WIDTH = 50.0f;
         [self.contentView addSubview:_zxLabel];
         
         _finishGreenLayer = [CALayer layer];
-        _finishGreenLayer.frame = self.bounds;
+        _finishGreenLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, 50.0);
         _finishGreenLayer.backgroundColor = [[[UIColor alloc] initWithRed:0.0 green:0.6 blue:0.0 alpha:1.0] CGColor];
         _finishGreenLayer.hidden = YES;
         [self.layer insertSublayer:_finishGreenLayer atIndex:0];
@@ -137,7 +137,7 @@ const float UI_CUES_WIDTH = 50.0f;
             _shouldDelFlag = fabsf(_transPoint.x)>=fabsf(_oriCenter.x);
             if (_shouldDelFlag) {
                 NSLog(@"should del");
-                [self deleteMe:self];
+                [self deleteMe:_todoItem];
             }else{
                 [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                     self.center = _oriCenter;
@@ -147,7 +147,7 @@ const float UI_CUES_WIDTH = 50.0f;
             _shouldFinishFlag = fabsf(_transPoint.x)>=fabsf(_oriCenter.x);
             if (_shouldFinishFlag) {
                 NSLog(@"should finish");
-                [self finishMe:self];
+                [self finishMe:_todoItem];
                 [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                     self.center = _oriCenter;
                 } completion:nil];
@@ -164,16 +164,16 @@ const float UI_CUES_WIDTH = 50.0f;
     //NSLog(@"out handlePan");
 }
 
-- (void)deleteMe:(UITableViewCell *)cell
+- (void)deleteMe:(ZXToDoItem *)item
 {
-    [self.delegate deleteTheCell:cell];
+    [self.delegate deleteTheCell:item];
 }
 
-- (void)finishMe:(UITableViewCell *)cell
+- (void)finishMe:(ZXToDoItem *)item
 {
     _zxLabel.strikeThroughHidden = NO;
     _finishGreenLayer.hidden = NO;
-    [self.delegate finishTheCell:cell];
+    [self.delegate finishTheCell:item];
 }
 
 - (void)setTodoItem:(ZXToDoItem *)todoItem

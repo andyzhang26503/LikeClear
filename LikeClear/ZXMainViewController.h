@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "ZXTableViewCell.h"
-@interface ZXMainViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ZXTableViewCellProtocol>
+#import "ZXTableViewDatasource.h"
+#import "ZXCustomTableView.h"
+@interface ZXMainViewController : UIViewController<ZXTableViewCellProtocol,ZXTableViewDatasource>
 
 @property (nonatomic,strong) NSMutableArray *todoArray;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+//@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet ZXCustomTableView *tableView;
 
 @end

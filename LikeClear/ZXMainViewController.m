@@ -48,9 +48,9 @@
                       [ZXToDoItem initWithTodoText:@"追梦赤子心"],nil];
     
     
-    self.tableView.delegate = self;
+    //self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
+    //self.tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor blackColor];
     //self.tableView.backgroundColor = [UIColor redColor];
 }
@@ -61,41 +61,69 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//{
+//    return self.todoArray.count;
+//}
+- (int)numberOfRows
 {
     return self.todoArray.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static NSString *cellName = @"cellName";
+//    ZXTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
+//    if (!cell) {
+//        cell = [[ZXTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellName];
+//    }
+//
+//    //cell.textLabel.text = [(ZXToDoItem *)[self.todoArray objectAtIndex:indexPath.row] todoText];
+//    cell.todoItem = [self.todoArray objectAtIndex:indexPath.row];
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    cell.textLabel.backgroundColor = [UIColor clearColor];
+//    cell.delegate = self;
+//    return cell;
+//}
+
+- (ZXTableViewCell *)cellForRowAtRow:(int)rowIndex
 {
     static NSString *cellName = @"cellName";
-    ZXTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
+    //ZXTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellName];
+    ZXTableViewCell *cell;
     if (!cell) {
         cell = [[ZXTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellName];
-    }
-
-    //cell.textLabel.text = [(ZXToDoItem *)[self.todoArray objectAtIndex:indexPath.row] todoText];
-    cell.todoItem = [self.todoArray objectAtIndex:indexPath.row];
+    }  
+    cell.todoItem = [self.todoArray objectAtIndex:rowIndex];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.delegate = self;
+    [self setCellColor:cell atIndex:rowIndex];
     return cell;
-}
+    
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+}
+- (void)setCellColor:(UIView *)cell atIndex:(int)rowIndex
 {
-    float greenFloat = (float)indexPath.row/(float)self.todoArray.count;
+    float greenFloat = (float)rowIndex/(float)self.todoArray.count;
     //cell.backgroundColor = [UIColor colorWithRed:1 green:greenFloat blue:0 alpha:0.4];
     cell.backgroundColor = [UIColor colorWithRed:1 green:greenFloat blue:0 alpha:1];
 }
-
-- (void)deleteTheCell:(UITableViewCell *)delCell
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    float greenFloat = (float)indexPath.row/(float)self.todoArray.count;
+//    //cell.backgroundColor = [UIColor colorWithRed:1 green:greenFloat blue:0 alpha:0.4];
+//    cell.backgroundColor = [UIColor colorWithRed:1 green:greenFloat blue:0 alpha:1];
+//}
+/*
+- (void)deleteTheCell:(ZXToDoItem *)atodoItem
 {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:delCell];
-    
+    //NSIndexPath *indexPath = [self.tableView indexPathForCell:delCell];
+    int row = [self.todoArray indexOfObject:atodoItem];
     //[self.tableView beginUpdates];
-    [self.todoArray removeObjectAtIndex:indexPath.row];
+    [self.todoArray removeObjectAtIndex:row];
     //[self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    
     NSArray *visibleCells= self.tableView.visibleCells;
     UIView *lastView = [visibleCells lastObject];
     float delay = 0.3;
@@ -120,11 +148,13 @@
     //[self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.2];
     //[self.tableView endUpdates];
 }
-
-- (void)finishTheCell:(UITableViewCell *)cell
+*/
+- (void)finishTheCell:(ZXToDoItem *)atodoItem
 {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    ZXToDoItem *todoItem =  [self.todoArray objectAtIndex:indexPath.row];
+    //NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    int row = [self.todoArray indexOfObject:atodoItem];
+    ZXToDoItem *todoItem =  [self.todoArray objectAtIndex:row];
     todoItem.finished = YES;
 }
+
 @end

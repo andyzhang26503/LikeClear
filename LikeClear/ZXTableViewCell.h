@@ -10,8 +10,8 @@
 #import "ZXLabel.h"
 #import "ZXToDoItem.h"
 @protocol ZXTableViewCellProtocol <NSObject>
-- (void)deleteTheCell:(UITableViewCell *)cell;
-- (void)finishTheCell:(UITableViewCell *)cell;
+- (void)deleteTheCell:(ZXToDoItem *)todoItem;
+- (void)finishTheCell:(ZXToDoItem *)todoItem;
 @end
 
 @interface ZXTableViewCell : UITableViewCell<UIGestureRecognizerDelegate>

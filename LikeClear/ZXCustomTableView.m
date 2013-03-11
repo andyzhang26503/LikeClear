@@ -8,6 +8,7 @@
 
 #import "ZXCustomTableView.h"
 #import "ZXToDoItem.h"
+#import "ZXTableViewCell.h"
 static const float cellHeight = 50.0f;
 @implementation ZXCustomTableView
 
@@ -16,7 +17,7 @@ static const float cellHeight = 50.0f;
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self refreshData];
+        //[self refreshData];
     }
     return self;
 }
@@ -52,12 +53,14 @@ static const float cellHeight = 50.0f;
     _scrollView.contentSize = CGSizeMake(self.frame.size.width, numberOfRows*cellHeight);
     if (numberOfRows!=0) {
         for (int i=0; i<numberOfRows; i++) {
-            UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(0, cellHeight*i, self.frame.size.width, cellHeight)];
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, cellView.frame.size.width, cellView.frame.size.height)];
-            [cellView addSubview:label];
-            label.text = [self.dataSource cellForRowAtRow:i].todoText;
+            ZXTableViewCell *cellView = [self.dataSource cellForRowAtRow:i];
+            cellView.frame = CGRectMake(0, cellHeight*i, self.frame.size.width, cellHeight);
+
+            //cellView = [[UIView alloc] initWithFrame:CGRectMake(0, cellHeight*i, self.frame.size.width, cellHeight)];
+            //UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, cellView.frame.size.width, cellView.frame.size.height)];
+            
             [_scrollView addSubview:cellView];
-            //[self addSubview:cellView];
+
         }
     }
 }
