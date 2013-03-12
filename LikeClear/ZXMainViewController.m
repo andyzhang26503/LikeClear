@@ -116,8 +116,8 @@
 //    //cell.backgroundColor = [UIColor colorWithRed:1 green:greenFloat blue:0 alpha:0.4];
 //    cell.backgroundColor = [UIColor colorWithRed:1 green:greenFloat blue:0 alpha:1];
 //}
-/*
-- (void)deleteTheCell:(ZXToDoItem *)atodoItem
+
+- (void)deleteTheCell:(ZXToDoItem *)atodoItem withCell:(ZXTableViewCell *)delCell
 {
     //NSIndexPath *indexPath = [self.tableView indexPathForCell:delCell];
     int row = [self.todoArray indexOfObject:atodoItem];
@@ -149,7 +149,7 @@
     //[self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.2];
     //[self.tableView endUpdates];
 }
-*/
+
 - (void)finishTheCell:(ZXToDoItem *)atodoItem
 {
     //NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];

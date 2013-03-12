@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "ZXLabel.h"
 #import "ZXToDoItem.h"
+@class ZXTableViewCell;
 @protocol ZXTableViewCellProtocol <NSObject>
-- (void)deleteTheCell:(ZXToDoItem *)todoItem;
+- (void)deleteTheCell:(ZXToDoItem *)todoItem withCell:(ZXTableViewCell *)delCell;
 - (void)finishTheCell:(ZXToDoItem *)todoItem;
 @end
 

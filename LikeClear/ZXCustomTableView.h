@@ -15,7 +15,10 @@
     Class _cellClass;
 }
 @property (nonatomic,weak) id<ZXTableViewDatasource> dataSource;
+@property (nonatomic,strong)NSArray *visibleCells;
 
 - (void)registerClassForCells:(Class)cellClass;
 - (ZXTableViewCell *)dequeueReusableCellWithIdentifier:(NSString *)aIdentifier;
+- (void)refreshData;
+- (void)reloadData;
 @end

@@ -167,7 +167,7 @@ const float UI_CUES_WIDTH = 50.0f;
 
 - (void)deleteMe:(ZXToDoItem *)item
 {
-    [self.delegate deleteTheCell:item];
+    [self.delegate deleteTheCell:item withCell:self];
 }
 
 - (void)finishMe:(ZXToDoItem *)item

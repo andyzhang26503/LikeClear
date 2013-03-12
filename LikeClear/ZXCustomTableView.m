@@ -104,7 +104,7 @@ static const float cellHeight = 50.0f;
 //    }
 }
 
-// returns the cell for the given row, or nil if it doesn't exist
+// !!!
 -(UIView*) cellForRow:(NSInteger)row {
     float topEdgeForRow = row * cellHeight;
     for (UIView* cell in [self mySubViews]) {
@@ -113,6 +113,7 @@ static const float cellHeight = 50.0f;
         }
     }
     return nil;
+
 }
 - (NSArray *)mySubViews
 {
@@ -154,5 +155,32 @@ static const float cellHeight = 50.0f;
 - (void)registerClassForCells:(Class)cellClass
 {
     _cellClass = cellClass;
+}
+
+- (NSArray *)visibleCells
+{
+    NSMutableArray *vCells = [[NSMutableArray alloc] initWithCapacity:12];
+    CGPoint scrollPoint = _scrollView.contentOffset;
+    int firstVisibleIndex = MAX(0,floor(scrollPoint.y/cellHeight));
+    int lastVisibleIndex = MIN([_dataSource numberOfRows],ceil(scrollPoint.y/cellHeight+self.bounds.size.height/cellHeight+1));
+    for (int i = firstVisibleIndex; i<lastVisibleIndex; i++) {
+        UIView *cell = [self cellForRow:i];
+//        NSArray *scrollSub = [_scrollView subviews];
+//        for (UIView *c in scrollSub) {
+//            if ([c isKindOfClass:[ZXTableViewCell class]]) {
+//                if (c.frame.origin.y == i*cellHeight) {
+//                    [vCells addObject:c];
+//                }
+//            }
+//        }
+        [vCells addObject:cell];
+    }
+    return  vCells;
+}
+
+- (void)reloadData
+{
+    [[self mySubViews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self refreshData];
 }
 @end
