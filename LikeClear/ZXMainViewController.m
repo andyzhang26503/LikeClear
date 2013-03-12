@@ -53,6 +53,7 @@
     //self.tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor blackColor];
     //self.tableView.backgroundColor = [UIColor redColor];
+    [self.tableView registerClassForCells:[ZXTableViewCell class]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -89,11 +90,11 @@
 - (ZXTableViewCell *)cellForRowAtRow:(int)rowIndex
 {
     static NSString *cellName = @"cellName";
-    //ZXTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellName];
-    ZXTableViewCell *cell;
-    if (!cell) {
-        cell = [[ZXTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellName];
-    }  
+    ZXTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellName];
+    //ZXTableViewCell *cell;
+//    if (!cell) {
+//        cell = [[ZXTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellName];
+//    }  
     cell.todoItem = [self.todoArray objectAtIndex:rowIndex];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.backgroundColor = [UIColor clearColor];

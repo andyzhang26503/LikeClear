@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "ZXTableViewDatasource.h"
-@interface ZXCustomTableView : UIView
+@interface ZXCustomTableView : UIView<UIScrollViewDelegate>
 {
     UIScrollView *_scrollView;
+    NSMutableSet *_reuseCellSet;
+    Class _cellClass;
 }
 @property (nonatomic,weak) id<ZXTableViewDatasource> dataSource;
+
+- (void)registerClassForCells:(Class)cellClass;
+- (ZXTableViewCell *)dequeueReusableCellWithIdentifier:(NSString *)aIdentifier;
 @end

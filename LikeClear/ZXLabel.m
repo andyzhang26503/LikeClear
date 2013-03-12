@@ -16,7 +16,7 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
-        self.font=[UIFont systemFontOfSize:16.0];
+        self.font=[UIFont boldSystemFontOfSize:16.0];
         _strikeThroughHidden = YES;
         
         _strikeThroughLayer = [CALayer layer];
@@ -39,7 +39,7 @@
 - (void)setText:(NSString *)text
 {
     [super setText:text];
-    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:16.0]];
+    CGSize size = [text sizeWithFont:[UIFont boldSystemFontOfSize:16.0]];
     _strikeThroughLayer.frame = CGRectMake(0, self.frame.size.height/2, size.width, 1);
 }
 - (void)setStrikeThroughHidden:(BOOL)strikeThroughHidden

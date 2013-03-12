@@ -28,7 +28,9 @@ static const float cellHeight = 50.0f;
     if (self) {
         // Initialization code
         //[self refreshData];
-        _scrollView = [[UIScrollView alloc] initWithFrame:self.frame];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectNull];
+        _scrollView.delegate = self;
+        _reuseCellSet = [[NSMutableSet alloc] init];
         [self addSubview:_scrollView];
     }
     return self;
@@ -44,24 +46,113 @@ static const float cellHeight = 50.0f;
 */
 - (void)layoutSubviews
 {
+    _scrollView.frame = self.frame;
     [self refreshData];
 }
 - (void)refreshData
 {
+    if (CGRectIsNull(_scrollView.frame)) {
+        return;
+    }
     int numberOfRows = [self.dataSource numberOfRows];
-    _scrollView.frame = self.frame;
-    _scrollView.contentSize = CGSizeMake(self.frame.size.width, numberOfRows*cellHeight);
-    if (numberOfRows!=0) {
-        for (int i=0; i<numberOfRows; i++) {
-            ZXTableViewCell *cellView = [self.dataSource cellForRowAtRow:i];
-            cellView.frame = CGRectMake(0, cellHeight*i, self.frame.size.width, cellHeight);
-
-            //cellView = [[UIView alloc] initWithFrame:CGRectMake(0, cellHeight*i, self.frame.size.width, cellHeight)];
-            //UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, cellView.frame.size.width, cellView.frame.size.height)];
-            
-            [_scrollView addSubview:cellView];
-
+    
+    _scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, numberOfRows*cellHeight);
+    
+    NSArray *subViewArray = [self mySubViews];
+    for (ZXTableViewCell *c in subViewArray) {
+        if (c.frame.origin.y+cellHeight<_scrollView.contentOffset.y) {
+            [self recycleCell:c];
+        }
+        if (c.frame.origin.y >_scrollView.contentOffset.y +self.frame.size.height) {
+            [self recycleCell:c];
         }
     }
+    CGPoint scrollPoint = _scrollView.contentOffset;
+    int firstVisibleIndex = MAX(0,floor(scrollPoint.y/cellHeight));
+    int lastVisibleIndex = MIN([_dataSource numberOfRows],ceil(scrollPoint.y/cellHeight+self.bounds.size.height/cellHeight+1));
+    //int lastVisibleIndex = ceil(scrollPoint.y/cellHeight+self.bounds.size.height/cellHeight);
+    for (int i = firstVisibleIndex; i<lastVisibleIndex; i++) {
+        //不用移动cell
+        UIView *cell = [self cellForRow:i];
+        if (!cell) {
+            ZXTableViewCell *cell = [self.dataSource cellForRowAtRow:i];
+            cell.frame = CGRectMake(0, cellHeight*i, self.frame.size.width, cellHeight);
+            
+            //!!!!!!
+            //[_scrollView addSubview:cell];
+            [_scrollView insertSubview:cell atIndex:0];
+        }
+        
+    }
+    
+//    if (numberOfRows!=0) {
+//        for (int i=0; i<numberOfRows; i++) {
+//            CGPoint scrollPoint = _scrollView.contentOffset;
+//            double n1 = floor(scrollPoint.y/cellHeight);
+//            double n2 = ceil(scrollPoint.y/cellHeight+self.bounds.size.height/cellHeight)-1;
+//            NSLog(@"scrollPoint.y==%f",scrollPoint.y);
+//            if (i<n1) {
+//                [self recycleCell:[self.dataSource cellForRowAtRow:i]];
+//            }else if (i>n2) {
+//                [self recycleCell:[self.dataSource cellForRowAtRow:i]];
+//            }else{                
+//                ZXTableViewCell *cellView = [self.dataSource cellForRowAtRow:i];
+//                cellView.frame = CGRectMake(0, cellHeight*i+scrollPoint.y, self.frame.size.width, cellHeight);
+//                [_scrollView addSubview:cellView];
+//            }
+//        }
+//    }
+}
+
+// returns the cell for the given row, or nil if it doesn't exist
+-(UIView*) cellForRow:(NSInteger)row {
+    float topEdgeForRow = row * cellHeight;
+    for (UIView* cell in [self mySubViews]) {
+        if (cell.frame.origin.y == topEdgeForRow) {
+            return cell;
+        }
+    }
+    return nil;
+}
+- (NSArray *)mySubViews
+{
+    NSMutableArray *subviewArray = [[NSMutableArray alloc] initWithCapacity:10];
+    //NSArray *viewArray = [self subviews];
+    NSArray *viewArray = [_scrollView subviews];
+    for (UIView *v in viewArray) {
+        if ([v isKindOfClass:[ZXTableViewCell class]]) {
+            [subviewArray addObject:v];
+        }
+    }
+    return subviewArray;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self refreshData];
+}
+- (void)recycleCell:(ZXTableViewCell *)acell
+{
+    [_reuseCellSet addObject:acell];
+    NSLog(@"_reuseCellSet.count==%d",_reuseCellSet.count);
+    [acell removeFromSuperview];
+}
+- (ZXTableViewCell *)dequeueReusableCellWithIdentifier:(NSString *)aIdentifier
+{
+    ZXTableViewCell *cell = [_reuseCellSet anyObject];
+    if (cell){
+        NSLog(@"Returning a cell from the pool");
+        [_reuseCellSet removeObject:cell];
+    }
+    if (!cell) {
+        cell = [[_cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:aIdentifier];
+        NSLog(@"zxtableviewcell alloc");
+    }
+    return cell;
+}
+
+- (void)registerClassForCells:(Class)cellClass
+{
+    _cellClass = cellClass;
 }
 @end

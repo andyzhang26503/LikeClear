@@ -42,6 +42,7 @@ const float UI_CUES_WIDTH = 50.0f;
         [self addGestureRecognizer:pan];
         
         _zxLabel = [[ZXLabel alloc] initWithFrame:CGRectMake(10, 0, self.bounds.size.width, self.bounds.size.height)];
+        _zxLabel.textColor = [UIColor whiteColor];
         [self.contentView addSubview:_zxLabel];
         
         _finishGreenLayer = [CALayer layer];
