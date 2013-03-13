@@ -159,12 +159,12 @@ static const float cellHeight = 50.0f;
 
 - (NSArray *)visibleCells
 {
-    NSMutableArray *vCells = [[NSMutableArray alloc] initWithCapacity:12];
-    CGPoint scrollPoint = _scrollView.contentOffset;
-    int firstVisibleIndex = MAX(0,floor(scrollPoint.y/cellHeight));
-    int lastVisibleIndex = MIN([_dataSource numberOfRows],ceil(scrollPoint.y/cellHeight+self.bounds.size.height/cellHeight+1));
-    for (int i = firstVisibleIndex; i<lastVisibleIndex; i++) {
-        UIView *cell = [self cellForRow:i];
+//    NSMutableArray *vCells = [[NSMutableArray alloc] initWithCapacity:12];
+//    CGPoint scrollPoint = _scrollView.contentOffset;
+//    int firstVisibleIndex = MAX(0,floor(scrollPoint.y/cellHeight));
+//    int lastVisibleIndex = MIN([_dataSource numberOfRows],ceil(scrollPoint.y/cellHeight+self.bounds.size.height/cellHeight+1));
+//    for (int i = firstVisibleIndex; i<lastVisibleIndex; i++) {
+//        //UIView *cell = [self cellForRow:i];
 //        NSArray *scrollSub = [_scrollView subviews];
 //        for (UIView *c in scrollSub) {
 //            if ([c isKindOfClass:[ZXTableViewCell class]]) {
@@ -173,9 +173,30 @@ static const float cellHeight = 50.0f;
 //                }
 //            }
 //        }
-        [vCells addObject:cell];
-    }
-    return  vCells;
+//        
+//    }
+//    
+//    return  vCells;
+    NSMutableArray *subviews = [NSMutableArray arrayWithArray:[self mySubViews]];
+//    for (UIView *v1 in subviews) {
+//        NSLog(@"before..y=%f",v1.frame.origin.y);
+//    }
+    NSArray *sortedSubviews = [subviews sortedArrayUsingComparator:^NSComparisonResult(id obj1,id obj2){
+        UIView *v1 = obj1;
+        UIView *v2 = obj2;
+        float result = v2.frame.origin.y-v1.frame.origin.y;
+        if (result>0.0) {
+            return NSOrderedAscending;
+        }else if(result<0.0){
+            return NSOrderedDescending;
+        }else{
+            return NSOrderedSame;
+        }
+    }];
+//    for (UIView *v2 in sortedSubviews) {
+//        NSLog(@"after..y=%f",v2.frame.origin.y);
+//    }
+    return sortedSubviews;
 }
 
 - (void)reloadData

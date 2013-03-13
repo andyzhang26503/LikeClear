@@ -16,7 +16,7 @@
 }
 @property (nonatomic,weak) id<ZXTableViewDatasource> dataSource;
 @property (nonatomic,strong)NSArray *visibleCells;
-
+@property (nonatomic,strong)UIScrollView *scrollView;
 - (void)registerClassForCells:(Class)cellClass;
 - (ZXTableViewCell *)dequeueReusableCellWithIdentifier:(NSString *)aIdentifier;
 - (void)refreshData;

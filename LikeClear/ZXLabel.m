@@ -15,10 +15,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.backgroundColor = [UIColor clearColor];
-        self.font=[UIFont boldSystemFontOfSize:16.0];
-        _strikeThroughHidden = YES;
-        
+
+        _strikeThroughHidden = YES;        
         _strikeThroughLayer = [CALayer layer];
         _strikeThroughLayer.backgroundColor = [UIColor whiteColor].CGColor;
         _strikeThroughLayer.hidden = _strikeThroughHidden;
@@ -39,17 +37,26 @@
 - (void)setText:(NSString *)text
 {
     [super setText:text];
-    CGSize size = [text sizeWithFont:[UIFont boldSystemFontOfSize:16.0]];
-    _strikeThroughLayer.frame = CGRectMake(0, self.frame.size.height/2, size.width, 1);
+    [self resizeStrikeThrough];
+}
+
+- (void)resizeStrikeThrough
+{
+    CGSize size = [self.text sizeWithFont:[UIFont boldSystemFontOfSize:16.0]];
+    _strikeThroughLayer.frame = CGRectMake(0, self.bounds.size.height/2, size.width, 1);
+    //NSLog(@"11self.bounds.size.height==%f",self.bounds.size.height);
 }
 - (void)setStrikeThroughHidden:(BOOL)strikeThroughHidden
 {
     _strikeThroughHidden = strikeThroughHidden;
+    _strikeThroughLayer.hidden = _strikeThroughHidden;
     [self setNeedsLayout];
 }
 - (void)layoutSubviews
 {
-    _strikeThroughLayer.hidden = _strikeThroughHidden;
+    [super layoutSubviews];
+    [self resizeStrikeThrough];
+    //NSLog(@"22self.bounds.size.height==%f",self.bounds.size.height);
 }
 
 //TODO

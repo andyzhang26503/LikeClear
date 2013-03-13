@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-@interface ZXLabel : UILabel
+@interface ZXLabel : UITextField
 {
     CALayer *_strikeThroughLayer;
 }

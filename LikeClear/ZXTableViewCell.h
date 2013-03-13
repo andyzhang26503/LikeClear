@@ -13,9 +13,11 @@
 @protocol ZXTableViewCellProtocol <NSObject>
 - (void)deleteTheCell:(ZXToDoItem *)todoItem withCell:(ZXTableViewCell *)delCell;
 - (void)finishTheCell:(ZXToDoItem *)todoItem;
+- (void)cellDidBeginEditing:(ZXTableViewCell *)cell;
+- (void)cellDidEndEditing:(ZXTableViewCell *)cell;
 @end
 
-@interface ZXTableViewCell : UITableViewCell<UIGestureRecognizerDelegate>
+@interface ZXTableViewCell : UITableViewCell<UIGestureRecognizerDelegate,UITextFieldDelegate>
 {
     CGPoint _oriCenter;
     CGPoint _transPoint;

@@ -97,8 +97,10 @@
 //    }  
     cell.todoItem = [self.todoArray objectAtIndex:rowIndex];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.backgroundColor = [UIColor clearColor];
+    //cell.textLabel.backgroundColor = [UIColor clearColor];
+
     cell.delegate = self;
+    cell.backgroundColor = [UIColor whiteColor];
     [self setCellColor:cell atIndex:rowIndex];
     return cell;
     
@@ -158,4 +160,33 @@
     todoItem.finished = YES;
 }
 
+- (void)cellDidBeginEditing:(ZXTableViewCell *)cell
+{
+    _editingOffset = self.tableView.scrollView.contentOffset.y - cell.frame.origin.y;
+    
+    for (UIView *c in self.tableView.visibleCells) {
+        [UIView animateWithDuration:0.3 animations:^{
+            c.frame = CGRectOffset(c.frame, 0, _editingOffset);
+            if (c!=cell) {
+                c.alpha = 0.3;
+            }
+        } completion:nil];
+    }
+
+    
+}
+
+- (void)cellDidEndEditing:(ZXTableViewCell *)acell
+{
+    for(UIView* c in [_tableView visibleCells]) {
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             c.frame = CGRectOffset(c.frame, 0, -_editingOffset);
+                             if (c != acell)
+                             {
+                                 c.alpha = 1.0;
+                             }
+                         }];
+    }
+}
 @end

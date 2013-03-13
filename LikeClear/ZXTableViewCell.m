@@ -21,13 +21,31 @@ const float UI_CUES_WIDTH = 50.0f;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        _tickLabel = [self createCueLabel];
+        _tickLabel.text = @"\u2713";
+        _tickLabel.textAlignment = NSTextAlignmentRight;
+        [self addSubview:_tickLabel];
+        _crossLabel = [self createCueLabel];
+        _crossLabel.text = @"\u2717";
+        _crossLabel.textAlignment = NSTextAlignmentLeft;
+        [self addSubview:_crossLabel];
         
+        //_zxLabel = [[ZXLabel alloc] initWithFrame:CGRectMake(10, 0, self.bounds.size.width, self.bounds.size.height)];
+        _zxLabel = [[ZXLabel alloc] initWithFrame:CGRectNull];
+        _zxLabel.textColor = [UIColor whiteColor];
+        _zxLabel.delegate = self;
+        _zxLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        _zxLabel.backgroundColor = [UIColor clearColor];
+        _zxLabel.font=[UIFont boldSystemFontOfSize:16.0];
+        [self.contentView addSubview:_zxLabel];
+
+  
         _gradientLayer = [CAGradientLayer layer];
         _gradientLayer.frame = self.frame;
         _gradientLayer.colors= [NSArray arrayWithObjects:(id)[UIColor colorWithWhite:0.1 alpha:0.4].CGColor,(id)[UIColor colorWithWhite:0.2 alpha:0.3].CGColor,(id)[UIColor clearColor].CGColor,(id)[UIColor colorWithWhite:0.3 alpha:0.3f].CGColor, nil];
         _gradientLayer.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.01],[NSNumber numberWithFloat:0.95],[NSNumber numberWithFloat:1.0], nil];
         [self.layer insertSublayer:_gradientLayer atIndex:0];
-        
+       
 //        _gradientLayer = [CAGradientLayer layer];
 //        _gradientLayer.frame = self.bounds;
 //        _gradientLayer.colors = @[(id)[[UIColor colorWithWhite:1.0f alpha:0.2f] CGColor],
@@ -41,9 +59,8 @@ const float UI_CUES_WIDTH = 50.0f;
         pan.delegate = self;
         [self addGestureRecognizer:pan];
         
-        _zxLabel = [[ZXLabel alloc] initWithFrame:CGRectMake(10, 0, self.bounds.size.width, self.bounds.size.height)];
-        _zxLabel.textColor = [UIColor whiteColor];
-        [self.contentView addSubview:_zxLabel];
+       
+        //[self.contentView insertSubview:_zxLabel atIndex:1];
         
         _finishGreenLayer = [CALayer layer];
         _finishGreenLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, 50.0);
@@ -51,15 +68,6 @@ const float UI_CUES_WIDTH = 50.0f;
         _finishGreenLayer.hidden = YES;
         [self.layer insertSublayer:_finishGreenLayer atIndex:0];
 
-        
-        _tickLabel = [self createCueLabel];
-        _tickLabel.text = @"\u2713";
-        _tickLabel.textAlignment = NSTextAlignmentRight;
-        [self addSubview:_tickLabel];
-        _crossLabel = [self createCueLabel];
-        _crossLabel.text = @"\u2717";
-        _crossLabel.textAlignment = NSTextAlignmentLeft;
-        [self addSubview:_crossLabel];
     }
     return self;
 }
@@ -84,6 +92,9 @@ const float UI_CUES_WIDTH = 50.0f;
 {
     [super layoutSubviews];
     _gradientLayer.frame = self.bounds;
+    
+    _zxLabel.frame = CGRectMake(10, 0,
+                              self.bounds.size.width - 10,self.bounds.size.height);
     _tickLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
                                   UI_CUES_WIDTH, self.bounds.size.height);
     _crossLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
@@ -181,8 +192,29 @@ const float UI_CUES_WIDTH = 50.0f;
 {
     _todoItem = todoItem;
     _zxLabel.text = todoItem.todoText;
+    //[_zxLabel setText: todoItem.todoText];
     _zxLabel.strikeThroughHidden = !todoItem.finished;
     _finishGreenLayer.hidden = !todoItem.finished;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_zxLabel resignFirstResponder];
+    return YES;
+}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return !self.todoItem.finished;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self.delegate cellDidEndEditing:self];
+    self.todoItem.todoText = textField.text;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self.delegate cellDidBeginEditing:self];
 }
 
 @end
