@@ -9,7 +9,7 @@
 #import "ZXCustomTableView.h"
 #import "ZXToDoItem.h"
 #import "ZXTableViewCell.h"
-static const float cellHeight = 50.0f;
+//static const float cellHeight = 50.0f;
 @implementation ZXCustomTableView
 
 - (id)initWithFrame:(CGRect)frame
@@ -68,6 +68,7 @@ static const float cellHeight = 50.0f;
         }
     }
     CGPoint scrollPoint = _scrollView.contentOffset;
+    //NSLog(@"contentOffset.y==%f",scrollPoint.y);
     int firstVisibleIndex = MAX(0,floor(scrollPoint.y/cellHeight));
     int lastVisibleIndex = MIN([_dataSource numberOfRows],ceil(scrollPoint.y/cellHeight+self.bounds.size.height/cellHeight+1));
     //int lastVisibleIndex = ceil(scrollPoint.y/cellHeight+self.bounds.size.height/cellHeight);
@@ -135,19 +136,19 @@ static const float cellHeight = 50.0f;
 - (void)recycleCell:(ZXTableViewCell *)acell
 {
     [_reuseCellSet addObject:acell];
-    NSLog(@"_reuseCellSet.count==%d",_reuseCellSet.count);
+    //NSLog(@"_reuseCellSet.count==%d",_reuseCellSet.count);
     [acell removeFromSuperview];
 }
 - (ZXTableViewCell *)dequeueReusableCellWithIdentifier:(NSString *)aIdentifier
 {
     ZXTableViewCell *cell = [_reuseCellSet anyObject];
     if (cell){
-        NSLog(@"Returning a cell from the pool");
+        //NSLog(@"Returning a cell from the pool");
         [_reuseCellSet removeObject:cell];
     }
     if (!cell) {
         cell = [[_cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:aIdentifier];
-        NSLog(@"zxtableviewcell alloc");
+        //NSLog(@"zxtableviewcell alloc");
     }
     return cell;
 }

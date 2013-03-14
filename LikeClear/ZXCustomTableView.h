@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ZXTableViewDatasource.h"
+
+#define cellHeight 50.0f
 @interface ZXCustomTableView : UIView<UIScrollViewDelegate>
 {
     UIScrollView *_scrollView;

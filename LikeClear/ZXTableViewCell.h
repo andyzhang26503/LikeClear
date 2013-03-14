@@ -23,7 +23,7 @@
     CGPoint _transPoint;
     BOOL _shouldDelFlag;
     BOOL _shouldFinishFlag;
-    ZXLabel *_zxLabel;
+    //ZXLabel *_zxLabel;
     CALayer *_finishGreenLayer;
     
     UILabel *_tickLabel;
@@ -35,4 +35,5 @@
 @property (nonatomic,weak)id<ZXTableViewCellProtocol> delegate;
 
 @property (nonatomic,strong)ZXToDoItem *todoItem;
+@property (nonatomic,strong,readonly)ZXLabel *zxLabel;
 @end

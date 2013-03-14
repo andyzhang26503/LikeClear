@@ -10,12 +10,13 @@
 #import "ZXTableViewCell.h"
 #import "ZXTableViewDatasource.h"
 #import "ZXCustomTableView.h"
+#import "ZXTableViewDragAddNew.h"
 @interface ZXMainViewController : UIViewController<ZXTableViewCellProtocol,ZXTableViewDatasource>
 {
     float _editingOffset;
 }
 @property (nonatomic,strong) NSMutableArray *todoArray;
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet ZXCustomTableView *tableView;
+@property (weak, nonatomic) IBOutlet ZXTableViewDragAddNew *tableView;
 
 @end

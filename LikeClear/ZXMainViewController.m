@@ -189,4 +189,20 @@
                          }];
     }
 }
+
+- (void)addCell
+{
+    ZXToDoItem *i = [[ZXToDoItem alloc] initWithText:@""];
+    [self.todoArray insertObject:i atIndex:0];
+    [self.tableView reloadData];
+    
+    ZXTableViewCell *editIndex;
+    for(ZXTableViewCell *c in self.tableView.visibleCells){
+        if (c.todoItem == i) {
+            editIndex = c;
+            break;
+        }
+    }
+    [editIndex.zxLabel becomeFirstResponder];
+}
 @end

@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @class ZXTableViewCell;
+@class ZXToDoItem;
 @protocol ZXTableViewDatasource <NSObject>
 
 - (int)numberOfRows;
 - (ZXTableViewCell *)cellForRowAtRow:(int)rowIndex;
+
+- (void)addCell;
 @end
