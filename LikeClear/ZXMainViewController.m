@@ -54,6 +54,7 @@
     self.tableView.backgroundColor = [UIColor blackColor];
     //self.tableView.backgroundColor = [UIColor redColor];
     [self.tableView registerClassForCells:[ZXTableViewCell class]];
+    _dragAddNew = [[ZXTableViewDragAddNew alloc] initWithTableView:_tableView];
 }
 
 - (void)didReceiveMemoryWarning

@@ -10,20 +10,33 @@
 
 @implementation ZXTableViewDragAddNew
 
-- (id)initWithFrame:(CGRect)frame
+//- (id)initWithFrame:(CGRect)frame
+//{
+//    self = [super initWithFrame:frame];
+//    if (self) {
+//        // Initialization code
+//    }
+//    return self;
+//}
+//- (id)initWithCoder:(NSCoder *)aDecoder
+//{
+//    self = [super initWithCoder:aDecoder];
+//    if (self) {
+//        _placeholderCell = [[ZXTableViewCell alloc] init];
+//        _placeholderCell.backgroundColor = [UIColor redColor];
+//        
+//    }
+//    return self;
+//}
+- (id)initWithTableView:(ZXCustomTableView *)tableView
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     if (self) {
-        // Initialization code
-    }
-    return self;
-}
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
+        _tableView = tableView;
         _placeholderCell = [[ZXTableViewCell alloc] init];
         _placeholderCell.backgroundColor = [UIColor redColor];
+        
+        _tableView.delegate = self;
         
     }
     return self;
@@ -37,16 +50,16 @@
        _pullDownInProgress = YES;
 //        _placeholderCell.frame = CGRectMake(0, -cellHeight, self.frame.size.width, cellHeight);
 //        _placeholderCell.alpha = 0.5;
-        [self insertSubview:_placeholderCell atIndex:0];
+        [_tableView insertSubview:_placeholderCell atIndex:0];
     }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [super scrollViewDidScroll:scrollView];
+    //[super scrollViewDidScroll:scrollView];
     CGPoint p = scrollView.contentOffset;
     if (_pullDownInProgress && p.y<=0.0f) {
-        _placeholderCell.frame = CGRectMake(0,-p.y-cellHeight, self.frame.size.width, cellHeight);
+        _placeholderCell.frame = CGRectMake(0,-p.y-cellHeight, _tableView.frame.size.width, cellHeight);
         if (-p.y >=cellHeight) {
             _placeholderCell.zxLabel.text = @"Release to add";
         }else{
@@ -65,8 +78,8 @@
     CGPoint p = scrollView.contentOffset;
     if (_pullDownInProgress&& p.y<=-cellHeight) {
 
-        [self.dataSource addCell];
-        //[self refreshData];
+        [_tableView.dataSource addCell];
+        //[_tableView refreshData];
     }
     _pullDownInProgress=NO;
     //!!!remove

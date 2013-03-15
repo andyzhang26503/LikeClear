@@ -8,9 +8,12 @@
 
 #import "ZXCustomTableView.h"
 #import "ZXTableViewCell.h"
-@interface ZXTableViewDragAddNew : ZXCustomTableView
+@interface ZXTableViewDragAddNew : NSObject<UIScrollViewDelegate>
 {
     ZXTableViewCell *_placeholderCell;
     BOOL _pullDownInProgress;
+    ZXCustomTableView *_tableView;
 }
+
+- (id)initWithTableView:(ZXCustomTableView *)tableView;
 @end

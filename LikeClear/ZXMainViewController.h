@@ -14,9 +14,10 @@
 @interface ZXMainViewController : UIViewController<ZXTableViewCellProtocol,ZXTableViewDatasource>
 {
     float _editingOffset;
+    ZXTableViewDragAddNew *_dragAddNew;
 }
 @property (nonatomic,strong) NSMutableArray *todoArray;
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet ZXTableViewDragAddNew *tableView;
+@property (weak, nonatomic) IBOutlet ZXCustomTableView *tableView;
 
 @end

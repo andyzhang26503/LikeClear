@@ -132,6 +132,10 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self refreshData];
+    
+    if ([self.delegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
+        [self.delegate scrollViewDidScroll:scrollView];
+    }
 }
 - (void)recycleCell:(ZXTableViewCell *)acell
 {
@@ -204,5 +208,21 @@
 {
     [[self mySubViews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self refreshData];
+}
+
+#pragma mark - UIScrollViewDelegate forwarding
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+    if ([self.delegate respondsToSelector:aSelector]) {
+        return YES;
+    }
+    return [super respondsToSelector:aSelector];
+}
+- (id)forwardingTargetForSelector:(SEL)aSelector
+{
+    if ([self.delegate respondsToSelector:aSelector]) {
+        return self.delegate;
+    }
+    return [super forwardingTargetForSelector:aSelector];
 }
 @end
