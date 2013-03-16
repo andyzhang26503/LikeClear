@@ -15,5 +15,6 @@
 - (int)numberOfRows;
 - (ZXTableViewCell *)cellForRowAtRow:(int)rowIndex;
 
-- (void)addCell;
+//- (void)addCell;
+- (void)inserItemAtIndex:(NSInteger)index;
 @end

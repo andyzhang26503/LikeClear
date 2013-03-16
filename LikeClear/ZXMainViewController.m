@@ -55,6 +55,7 @@
     //self.tableView.backgroundColor = [UIColor redColor];
     [self.tableView registerClassForCells:[ZXTableViewCell class]];
     _dragAddNew = [[ZXTableViewDragAddNew alloc] initWithTableView:_tableView];
+    _pinchAddNew = [[ZXTableViewPinchToAdd alloc] initWithTableView:_tableView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -147,6 +148,12 @@
             startAnimation = YES;
             delCell.hidden = YES;
         }
+        if (delCell==lastView) {
+            if (startAnimation) {
+                [self.tableView reloadData];
+            }
+        }
+        
     }
     
     //[self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.2];
@@ -191,10 +198,13 @@
     }
 }
 
-- (void)addCell
+//- (void)addCell
+//{
+//    }
+- (void)inserItemAtIndex:(NSInteger)index
 {
     ZXToDoItem *i = [[ZXToDoItem alloc] initWithText:@""];
-    [self.todoArray insertObject:i atIndex:0];
+    [self.todoArray insertObject:i atIndex:index];
     [self.tableView reloadData];
     
     ZXTableViewCell *editIndex;
@@ -205,5 +215,6 @@
         }
     }
     [editIndex.zxLabel becomeFirstResponder];
+
 }
 @end

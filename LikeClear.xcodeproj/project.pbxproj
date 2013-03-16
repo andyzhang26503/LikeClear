@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		295E88D216F2A932007B14F9 /* ZXTableViewPinchToAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 295E88D116F2A932007B14F9 /* ZXTableViewPinchToAdd.m */; };
+		295F04B916F15A84007DEC90 /* ZXTableViewDragAddNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 295F04B816F15A84007DEC90 /* ZXTableViewDragAddNew.m */; };
 		299816AC16ED71800077D7A2 /* ZXCustomTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 299816AA16ED71800077D7A2 /* ZXCustomTableView.m */; };
 		29A4AC1B16E987D2002D0E1C /* ZXToDoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A4AC1A16E987D2002D0E1C /* ZXToDoItem.m */; };
 		29C2B2EA16E98068003B7C25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29C2B2E916E98068003B7C25 /* UIKit.framework */; };
@@ -26,6 +28,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		295E88D016F2A932007B14F9 /* ZXTableViewPinchToAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTableViewPinchToAdd.h; sourceTree = "<group>"; };
+		295E88D116F2A932007B14F9 /* ZXTableViewPinchToAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTableViewPinchToAdd.m; sourceTree = "<group>"; };
+		295F04B716F15A84007DEC90 /* ZXTableViewDragAddNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTableViewDragAddNew.h; sourceTree = "<group>"; };
+		295F04B816F15A84007DEC90 /* ZXTableViewDragAddNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTableViewDragAddNew.m; sourceTree = "<group>"; };
 		299816A916ED71800077D7A2 /* ZXCustomTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCustomTableView.h; sourceTree = "<group>"; };
 		299816AA16ED71800077D7A2 /* ZXCustomTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCustomTableView.m; sourceTree = "<group>"; };
 		299816AB16ED71800077D7A2 /* ZXTableViewDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTableViewDatasource.h; sourceTree = "<group>"; };
@@ -113,6 +119,10 @@
 				29F4A18B16EB768500617A4C /* ZXLabel.m */,
 				299816A916ED71800077D7A2 /* ZXCustomTableView.h */,
 				299816AA16ED71800077D7A2 /* ZXCustomTableView.m */,
+				295F04B716F15A84007DEC90 /* ZXTableViewDragAddNew.h */,
+				295F04B816F15A84007DEC90 /* ZXTableViewDragAddNew.m */,
+				295E88D016F2A932007B14F9 /* ZXTableViewPinchToAdd.h */,
+				295E88D116F2A932007B14F9 /* ZXTableViewPinchToAdd.m */,
 				299816AB16ED71800077D7A2 /* ZXTableViewDatasource.h */,
 				29C2B2F016E98068003B7C25 /* Supporting Files */,
 			);
@@ -207,6 +217,8 @@
 				29DA0E2416EADEA500C7CE7F /* ZXTableViewCell.m in Sources */,
 				29F4A18C16EB768500617A4C /* ZXLabel.m in Sources */,
 				299816AC16ED71800077D7A2 /* ZXCustomTableView.m in Sources */,
+				295F04B916F15A84007DEC90 /* ZXTableViewDragAddNew.m in Sources */,
+				295E88D216F2A932007B14F9 /* ZXTableViewPinchToAdd.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

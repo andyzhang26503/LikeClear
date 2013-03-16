@@ -78,7 +78,7 @@
     CGPoint p = scrollView.contentOffset;
     if (_pullDownInProgress&& p.y<=-cellHeight) {
 
-        [_tableView.dataSource addCell];
+        [_tableView.dataSource inserItemAtIndex:0];
         //[_tableView refreshData];
     }
     _pullDownInProgress=NO;

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ZXLabel.h"
 #import "ZXToDoItem.h"
+
+#define cellHeight 60.0f
 @class ZXTableViewCell;
 @protocol ZXTableViewCellProtocol <NSObject>
 - (void)deleteTheCell:(ZXToDoItem *)todoItem withCell:(ZXTableViewCell *)delCell;

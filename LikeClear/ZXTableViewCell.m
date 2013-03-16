@@ -63,7 +63,7 @@ const float UI_CUES_WIDTH = 50.0f;
         //[self.contentView insertSubview:_zxLabel atIndex:1];
         
         _finishGreenLayer = [CALayer layer];
-        _finishGreenLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, 50.0);
+        _finishGreenLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width,cellHeight );
         _finishGreenLayer.backgroundColor = [[[UIColor alloc] initWithRed:0.0 green:0.6 blue:0.0 alpha:1.0] CGColor];
         _finishGreenLayer.hidden = YES;
         [self.layer insertSublayer:_finishGreenLayer atIndex:0];
